@@ -545,19 +545,25 @@ def clear():
 
 logo=("""
 
-
-
-[green1]     ██████╗░██████╗░███████╗███╗░░░███╗██╗██╗░░░██╗███╗░░░███╗
-[meduim_green1]     ██╔══██╗██╔══██╗██╔════╝████╗░████║██║██║░░░██║████╗░████║
-[green1]     ██████╔╝██████╔╝█████╗░░██╔████╔██║██║██║░░░██║██╔████╔██║
-[green1]     ██╔═══╝░██╔══██╗██╔══╝░░██║╚██╔╝██║██║██║░░░██║██║╚██╔╝██║
-[green1]     ██║░░░░░██║░░██║███████╗██║░╚═╝░██║██║╚██████╔╝██║░╚═╝░██║
-[green1]     ╚═╝░░░░░╚═╝░░╚═╝╚══════╝╚═╝░░░░░╚═╝╚═╝░╚═════╝░╚═╝░░░░░╚═╝[cyan][bold]VERSION 0.5
+[green1]                ,----,                    ,----, 
+[green1]              ,/   .`|  ,----..         ,/   .`| 
+[green1]   ,---,    ,`   .'  : /   /   \      ,`   .'  : 
+[green1],`--.' |  ;    ;     //   .     :   ;    ;     / 
+[green1]|   :  :.'___,/    ,'.   /   ;.  \.'___,/    ,'  
+[green1]:   |  '|    :     |.   ;   /  ` ;|    :     |   
+[green1]|   :  |;    |.';  ;;   |  ; \ ; |;    |.';  ;   
+[green1]'   '  ;`----'  |  ||   :  | ; | '`----'  |  |   
+[green1]|   |  |    '   :  ;.   |  ' ' ' :    '   :  ;   
+[green1]'   :  ;    |   |  ''   ;  \; /  |    |   |  '   
+[green1]|   |  '    '   :  | \   \  ',  /     '   :  |   
+[green1]'   :  |    ;   |.'   ;   :    /      ;   |.'    
+[green1];   |.'     '---'      \   \ .'       '---'      
+[green1]'---'                   `---`  [cyan][bold]VERSION 0.5
           [green_yellow]THIS [dark_olive_gre]TOOLS [pale_green1] IS[dark_sea_green…] NOT FOR SALE
 """)
 ll=str([hari,tanggal])
-hx=("""  [bold green1]DEVELOPER[medium_purple1]   ⟩[cyan][bold] Deen
-  [bold green1]FACEBOOK[medium_purple1]    ⟩[cyan][bold] Edji
+hx=("""  [bold green1]DEVELOPER[medium_purple1]   ⟩[cyan][bold] Edji
+  [bold green1]FACEBOOK[medium_purple1]    ⟩[cyan][bold] Edji haha	
   [bold green1]GITHUB[medium_purple1]      ⟩[bright_yellow] SEKRET
   [bold green1]STATUS[medium_purple1]      ⟩[bright_yellow] ALL NETWORK 
   [bold green1]TOOLS[medium_purple1]       ⟩[bright_yellow] OWN 
