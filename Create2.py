@@ -654,13 +654,13 @@ logo=("""
 [pale_green1]          ░╚████╔╝░██║██╔══██╗██║░░░██║░╚═══██╗
 [pale_green1]          ░░╚██╔╝░░██║██║░░██║╚██████╔╝██████╔╝
 [pale_green1]          ░░░╚═╝░░░╚═╝╚═╝░░╚═╝░╚═════╝░╚═════╝░ [green1][bold]VERSION/2
-          [green_yellow] THIS [green2]TOOLS[pale_green1] IS [meduim_spring_green2]FOR [cyan2]FREE
+          [green_yellow] THIS [green2]TOOLS[pale_green1] IS [meduim_spring_green2]FOR [cyan2]OWN
 """)
 ll=str([hari,tanggal])
 kk=str([xy,co])
 hx=(f"""  [bold green1]DEVELOPER[medium_purple1]   ⟩ [bold green1] Sythe-Yush
-  [bold green1]FACEBOOK[medium_purple1]    ⟩ [bold green1]YUSH HUELIN
-  [bold green1]TOOL/STATUS[medium_purple1] ⟩ [bold green1]PAID
+  [bold green1]FACEBOOK[medium_purple1]    ⟩ [bold green1]Edji
+  [bold green1]TOOL/STATUS[medium_purple1] ⟩ [bold green1]OWN
   [bold green1]TODAY DATE[medium_purple1]  ⟩ [bold green1]{ll}
   [bold green1]IP COUNTRY[medium_purple1]  ⟩ [bold green1]{kk}""")
 def banner():
