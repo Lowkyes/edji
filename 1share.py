@@ -3637,7 +3637,7 @@ def logo():
 ░░░██║░░░╚██████╔╝██████╔╝██║░░██║
 ░░░╚═╝░░░░╚═════╝░╚═════╝░╚═╝░░╚═╝
                   """,
-           title=f"{Y}COOKIE GETTER", subtitle=f"{R}DEVELOP BY Y U S H ", border_style="bold yellow"))
+           title=f"{Y}COOKIE GETTER", subtitle=f"{R}DEVELOP BY E D J I ", border_style="bold yellow"))
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
