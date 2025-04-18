@@ -560,19 +560,19 @@ logo=("""
 
 
 
- [green]     ██╗░░░██╗██╗██████╗░██╗░░░██╗░██████╗
- [spring_green]     ██║░░░██║██║██╔══██╗██║░░░██║██╔════╝
- [medium_spring_green2]     ╚██╗░██╔╝██║██████╔╝██║░░░██║╚█████╗░
- [cyan1]     ░╚████╔╝░██║██╔══██╗██║░░░██║░╚═══██╗
- [cyan2]     ░░╚██╔╝░░██║██║░░██║╚██████╔╝██████╔╝
-  [cyan2]    ░░░╚═╝░░░╚═╝╚═╝░░╚═╝░╚═════╝░╚═════╝░░[green_yellow][bold]VERSION/0.4
+ [green]       ______ _____       _ _____ 
+ [spring_green]      |  ____|  __ \     | |_   _|
+ [medium_spring_green2]      | |__  | |  | |    | | | |  
+ [cyan1]      |  __| | |  | |_   | | | |  
+ [cyan2]      | |____| |__| | |__| |_| |_ 
+  [cyan2]     |______|_____/ \____/|_____|[green_yellow][bold]VERSION/0.4
           [green_yellow]THIS [dark_olive_gre]TOOL[pale_green1] IS[dark_sea_green…] NOT FOR FREE
 """)
 ll=str([hari,tanggal])
 hx=(f"""  [bold green_yellow]DEVELOPER[medium_purple1]   ⟩ [bold red] Sythe
-  [bold red]FACEBOOK[medium_purple1]    ⟩ [bold cyan1] Yush Huilen
-  [bold red]STATUS[medium_purple1]      ⟩ [bold cyan1]ACTIVE until feb 28, 2025
-  [bold red]TOOL[medium_purple1]        ⟩ [bold cyan1]Paided
+  [bold red]FACEBOOK[medium_purple1]    ⟩ [bold cyan1] Edji
+  [bold red]STATUS[medium_purple1]      ⟩ [bold cyan1]ACTIVE until April 28, 2025
+  [bold red]TOOL[medium_purple1]        ⟩ [bold cyan1] OWN
   [bold red]TODAY DATE[medium_purple1]  ⟩ [bold cyan1]{ll}""")
 
 def banner():
