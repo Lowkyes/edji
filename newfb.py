@@ -520,24 +520,42 @@ def get_nopee():
 #──────────────{ EMAIL }──────────────#
 def GetEmail():
     global login, domain
-    login = "testuser123"  # You can change this to a random string if needed
+    login = ''.join(random.choices(string.ascii_lowercase + string.digits, k=10))
     domain = "1secmail.com"
     return f"{login}@{domain}"
 
 #──────────────{ EMAIL CODE }──────────────#
 def GetCode():
     try:
-        response = requests.get(
-            f'https://www.1secmail.com/api/v1/?action=getMessages&login={login}&domain={domain}'
+        messages = requests.get(
+            f"https://www.1secmail.com/api/v1/",
+            params={
+                "action": "getMessages",
+                "login": login,
+                "domain": domain
+            }
         ).json()
-        message_id = response[0]['id']
+
+        if not messages:
+            return None
+
+        message_id = messages[0]['id']
         message = requests.get(
-            f'https://www.1secmail.com/api/v1/?action=readMessage&login={login}&domain={domain}&id={message_id}'
+            f"https://www.1secmail.com/api/v1/",
+            params={
+                "action": "readMessage",
+                "login": login,
+                "domain": domain,
+                "id": message_id
+            }
         ).json()
-        print(message)
+
+        print(message)  # for debugging
         code = re.search(r'FB-(\d+)', message.get('body', ''))
         return code.group(1) if code else None
-    except:
+
+    except Exception as e:
+        print("Error:", e)
         return None
 
 #──────────────{ COLOR }──────────────#
@@ -647,8 +665,7 @@ def main() -> None:
         mts = ses.get("https://x.facebook.com").text
         m_ts = re.search(r'name="m_ts" value="(.*?)"',str(mts)).group(1)
         formula = extractor(response.text)
-        em = Email().Mail()
-        email2 = em['mail']
+        email2 = GetEmail()
         phone2 = get_nope()
         a=Tree(":file_folder:",guide_style="bold green_yellow")
         a.add(f"[violet][[yellow2]●[violet]] [bold green]NAME     [cyan2] ⟩ [bold green]{first_name} {last_name}")
