@@ -860,7 +860,7 @@ def menu():
         else:
             first_name = manual_first
             last_name = manual_last
-        register_facebook_account(password, first_name, last_name, birthday
+        register_facebook_account(password, first_name, last_name, birthday)
 
 def register_facebook_account(password, first_name, last_name, birthday):
     session = requests.Session()
