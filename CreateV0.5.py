@@ -817,7 +817,7 @@ def confirm_id(mail,uid,otp,data,ses):
 #──────────────{ PROGRES }──────────────#
 def progres(current, num_accounts, delay):
 		for sleep in range(int(num_accounts), 0, -1):
-			print(f'[YUSH]-[{current}|{num_accounts}]-[SUCCESS:-{len(oks)}|BAD:-{len(cps)}]',end='\r')
+			print(f'[Edji]-[{current}|{num_accounts}]-[SUCCESS:-{len(oks)}|BAD:-{len(cps)}]',end='\r')
 			time.sleep(1)
 			if current == num_accounts:
 				break
