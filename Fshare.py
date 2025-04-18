@@ -3678,14 +3678,15 @@ def randc():
 def logo():
     rp(pan(f"""{randc()}
 
-██╗░░░██╗██╗░░░██╗░██████╗██╗░░██╗
-╚██╗░██╔╝██║░░░██║██╔════╝██║░░██║
-░╚████╔╝░██║░░░██║╚█████╗░███████║
-░░╚██╔╝░░██║░░░██║░╚═══██╗██╔══██║
-░░░██║░░░╚██████╔╝██████╔╝██║░░██║
-░░░╚═╝░░░░╚═════╝░╚═════╝░╚═╝░░╚═╝
+
+  ______ _____       _ _____ 
+ |  ____|  __ \     | |_   _|
+ | |__  | |  | |    | | | |  
+ |  __| | |  | |_   | | | |  
+ | |____| |__| | |__| |_| |_ 
+ |______|_____/ \____/|_____|
                   """,
-           title=f"{Y}COOKIE GETTER", subtitle=f"{R}DEVELOP BY Y U S H ", border_style="bold yellow"))
+           title=f"{Y}COOKIE GETTER", subtitle=f"{R}DEVELOP BY E D J I ", border_style="bold yellow"))
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
