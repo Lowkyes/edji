@@ -519,26 +519,24 @@ def get_nopee():
     return nope    
 #──────────────{ EMAIL }──────────────#
 def GetEmail():
-    global email_id, email_token
-    response = requests.get('https://tempmail.uno/api/tempmail').json()
-    email_id = response['id']
-    email_token = response['token']
-    return response['address']
+    global login, domain
+    login = "testuser123"  # You can change this to a random string if needed
+    domain = "1secmail.com"
+    return f"{login}@{domain}"
 
 #──────────────{ EMAIL CODE }──────────────#
 def GetCode():
     try:
-        payload = {
-            "id": email_id,
-            "token": email_token
-        }
-        response = requests.post('https://tempmail.uno/api/tempmail', json=payload).json()
-        for mail in response:
-            print(mail)
-            code = re.search(r'FB-(\d+)', mail.get('body', ''))
-            if code:
-                return code.group(1)
-        return None
+        response = requests.get(
+            f'https://www.1secmail.com/api/v1/?action=getMessages&login={login}&domain={domain}'
+        ).json()
+        message_id = response[0]['id']
+        message = requests.get(
+            f'https://www.1secmail.com/api/v1/?action=readMessage&login={login}&domain={domain}&id={message_id}'
+        ).json()
+        print(message)
+        code = re.search(r'FB-(\d+)', message.get('body', ''))
+        return code.group(1) if code else None
     except:
         return None
 
