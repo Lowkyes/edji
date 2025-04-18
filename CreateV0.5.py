@@ -586,7 +586,7 @@ def AUTO_BRYX():
     if Bryx in ["a","A","1","01"]:
         method()
     elif Bryx in ["b","B","2","02"]:
-        os.system("xdg-open https://www.facebook.com/yvonne.howell.142")
+        os.system("xdg-open https://i.pinimg.com/564x/3d/8c/0c/3d8c0c7305dd90ac8229908894e13fe0.jpg")
         time.sleep(2);AUTO_BRYX()
     elif Bryx in ["c","C","3","03"]:exit()
     else:AUTO_BRYX()
