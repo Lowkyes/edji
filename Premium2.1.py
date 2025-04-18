@@ -219,7 +219,7 @@ def jovan():
           ╚═╝░░╚═╝╚═════╝░╚═╝░░░░░╚═╝╚═╝╚═╝░░╚══╝╚═════╝░
                  {white} https://exoboost.site
      {red}──────────────────────────────────────────────────────────────────────\033[0m
-     {red}OWNER     {white}: {yellow} YUSH
+     {red}OWNER     {white}: {yellow} EDJI
      {red}FACEBOOK  {white}: {yellow} None
      {red}──────────────────────────────────────────────────────────────────────\033[0m""")
 def main():
