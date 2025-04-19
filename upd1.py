@@ -984,6 +984,7 @@ def register_facebook_account(password, first_name, last_name, birthday):
             cps.append(id)
         else:
             print(Panel(' [bold green]ACCOUNT ACCESSABLE', style="bold violet"))
+            print(f"[🌐] Proxy used: {proxy['http']}")
             time.sleep(30)
             try:
                 cod = Email(em["session"]).inbox()
