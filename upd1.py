@@ -31,23 +31,21 @@ from bs4 import BeautifulSoup as sop
 from datetime import datetime
 from time import sleep as slp
 
-#──────────────{ PROXY LOADER }──────────────#
-proxies = []
-try:
-    with open("proxies.txt", "r") as f:
-        for line in f:
-            ip, port, user, pwd = line.strip().split(":")
-            proxy_url = f"http://{user}:{pwd}@{ip}:{port}"
-            proxies.append({
-                "http": proxy_url,
-                "https": proxy_url
-            })
-except Exception as e:
-    print("[⚠️] Could not load proxies:", e)
+#──────────────{ PROXY SETUP }──────────────#
+def load_proxies(file_path="proxies.txt"):
+    with open(file_path, "r") as f:
+        proxy_list = [line.strip() for line in f if line.strip()]
+    return proxy_list
 
 def get_random_proxy(proxy_list):
-    import random
     return random.choice(proxy_list)
+
+def get_ip(session):
+    try:
+        ip = session.get('https://api.ipify.org', timeout=10).text
+        return ip
+    except:
+        return "Unknown"
 
 #──────────────{ SECURITY-CODE }──────────────#
 def clr():
@@ -647,7 +645,14 @@ def main() -> None:
     banner()
     print(Panel(f" [bold green]IF NO RESULT ON/OFF AIRPLANE MODE OR VPN 1.1.1.1",style="bold violet"))
     for _ in range(int(num_accounts)):
-        ses = requests.Session()
+        proxy_list = load_proxies()
+    proxy = get_random_proxy(proxy_list)
+    ses = requests.Session()
+    ses.proxies = {
+        "http": f"http://{proxy}",
+        "https": f"http://{proxy}"
+    }
+    ip_used = get_ip(ses)
         #sys.stdout.write(f'\033[1;37m[\033[1;35mBRYXPOGI\033[1;37m]-[\033[1;31m{num_accounts}\033[1;37m]-[\033[1;32mSUCCESS:-{len(oks)}\033[1;37m]');sys.stdout.flush()
         response = ses.get(
             url='https://x.facebook.com/reg',
@@ -931,15 +936,7 @@ def register_facebook_account(password, first_name, last_name, birthday):
     req['sig'] = ensig
     api_url = 'https://b-api.facebook.com/method/user.register'
     headers = {'User-Agent': ua6()}
-    try:
-        proxy = get_random_proxy(proxies)
-        print(f"[🌐] Trying proxy: {proxy.get('http')}")
-        response = requests.post(api_url, data=req, headers=headers, proxies=proxy, timeout=15)
-        print(f"[📡] FB Response: {response.text}")
-        reg = response.json()
-    except Exception as e:
-        print(f"[❌] Proxy or request error: {e}")
-        return
+    response = requests.post(api_url, data=req, headers=headers)
     reg = response.json()
     id = reg.get('new_user_id')
     token = reg.get('session_info', {}).get('access_token')
@@ -949,7 +946,6 @@ def register_facebook_account(password, first_name, last_name, birthday):
             cps.append(id)
         else:
             print(Panel(' [bold green]ACCOUNT ACCESSABLE', style="bold violet"))
-            print(f"[✅] Proxy Used: {proxy.get('http')}")
             time.sleep(30)
             try:
                 cod = Email(em["session"]).inbox()
