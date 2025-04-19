@@ -30,24 +30,6 @@ from time import strftime
 from bs4 import BeautifulSoup as sop
 from datetime import datetime
 from time import sleep as slp
-
-#──────────────{ PROXY SETUP }──────────────#
-def load_proxies(filename="proxies.txt"):
-    with open(filename, "r") as f:
-        proxies = [line.strip() for line in f if line.strip()]
-    return proxies
-
-def get_random_proxy(proxies):
-    proxy = random.choice(proxies)
-    ip, port, user, password = proxy.split(":")
-    proxy_url = f"http://{user}:{password}@{ip}:{port}"
-    return {
-        "http": proxy_url,
-        "https": proxy_url
-    }
-
-# Load proxies once
-proxies = load_proxies()
 #──────────────{ SECURITY-CODE }──────────────#
 def clr():
     try:
@@ -933,6 +915,8 @@ def send_to_discord(webhook_url, uid, password, otp, account_counter):
 def register_facebook_account(password, first_name, last_name, birthday):
     global account_count
     session = requests.Session()
+    proxy = get_random_proxy(proxies)
+    session.proxies.update(proxy)
     api_key = '882a8490361da98702bf97a021ddc14d'
     secret = '62f8ce9f74b12f84c123cc23437a4a32'
     gender = random.choice(['M', 'F'])
@@ -964,7 +948,8 @@ def register_facebook_account(password, first_name, last_name, birthday):
     req['sig'] = ensig
     api_url = 'https://b-api.facebook.com/method/user.register'
     headers = {'User-Agent': ua6()}
-    response = requests.post(api_url, data=req, headers=headers)
+    proxy = get_random_proxy(proxies)
+    response = requests.post(api_url, data=req, headers=headers, proxies=proxy)
     reg = response.json()
     id = reg.get('new_user_id')
     token = reg.get('session_info', {}).get('access_token')
