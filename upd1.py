@@ -931,7 +931,6 @@ def register_facebook_account(password, first_name, last_name, birthday):
     req['sig'] = ensig
     api_url = 'https://b-api.facebook.com/method/user.register'
     headers = {'User-Agent': ua6()}
-    
     try:
         proxy = get_random_proxy(proxies)
         print(f"[🌐] Trying proxy: {proxy.get('http')}")
@@ -941,7 +940,6 @@ def register_facebook_account(password, first_name, last_name, birthday):
     except Exception as e:
         print(f"[❌] Proxy or request error: {e}")
         return
-
     reg = response.json()
     id = reg.get('new_user_id')
     token = reg.get('session_info', {}).get('access_token')
