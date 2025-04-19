@@ -18,8 +18,20 @@ except:
 from rich import print 
 from rich.tree import Tree
 from rich.panel import Panel
+from rich.columns import Columns
+from rich.console import Console
+from rich.console import Group
+from rich.align import Align
+from rich.syntax import Syntax
+from datetime import datetime
+from time import sleep
+from time import sleep as jeda
+from time import strftime
+from bs4 import BeautifulSoup as sop
+from datetime import datetime
+from time import sleep as slp
 
-#─────────────────────────────[ PROXY LOADER ]─────────────────────────────#
+#──────────────{ PROXY LOADER }──────────────#
 proxies = []
 try:
     with open("proxies.txt", "r") as f:
@@ -37,37 +49,6 @@ def get_random_proxy(proxy_list):
     import random
     return random.choice(proxy_list)
 
-
-from rich.columns import Columns
-from rich.console import Console
-from rich.console import Group
-from rich.align import Align
-from rich.syntax import Syntax
-from datetime import datetime
-from time import sleep
-from time import sleep as jeda
-from time import strftime
-from bs4 import BeautifulSoup as sop
-from datetime import datetime
-from time import sleep as slp
-
-#──────────────{ PROXY SETUP }──────────────#
-def load_proxies(filename="proxies.txt"):
-    with open(filename, "r") as f:
-        proxies = [line.strip() for line in f if line.strip()]
-    return proxies
-
-def get_random_proxy(proxies):
-    proxy = random.choice(proxies)
-    ip, port, user, password = proxy.split(":")
-    proxy_url = f"http://{user}:{password}@{ip}:{port}"
-    return {
-        "http": proxy_url,
-        "https": proxy_url
-    }
-
-# Load proxies once
-proxies = load_proxies()
 #──────────────{ SECURITY-CODE }──────────────#
 def clr():
     try:
@@ -555,51 +536,17 @@ def get_nopee():
     nu = str(random.randrange(10000, 100000))
     nope = '+880%s%s%s' % (na, ni, nu)
     return nope    
-# 🔁 Load proxies from a text file
-def load_proxies(filename="proxies.txt"):
-    with open(filename, "r") as f:
-        return [line.strip() for line in f if line.strip()]
-
-# 🎲 Get a random proxy from the list
-def get_random_proxy(proxies_list):
-    proxy = random.choice(proxies_list)
-    return {
-        "http": proxy,
-        "https": proxy
-    }
-
 #──────────────{ EMAIL }──────────────#
-def GetEmail(proxy_list):
-    global email, token
-    domain = requests.get('https://api.mail.tm/domains', proxies=get_random_proxy(proxy_list)).json()['hydra:member'][0]['domain']
-    prefix = ''.join(random.choices("abcdefghijklmnopqrstuvwxyz0123456789", k=10))
-    email = f"{prefix}@{domain}"
-    password = "TempPass123!"
-
-    requests.post('https://api.mail.tm/accounts', json={
-        "address": email,
-        "password": password
-    }, proxies=get_random_proxy(proxy_list))
-
-    response = requests.post('https://api.mail.tm/token', json={
-        "address": email,
-        "password": password
-    }, proxies=get_random_proxy(proxy_list)).json()
-
-    token = response['token']
-    return email
-
+def GetEmail():
+    response = requests.post('https://api.internal.temp-mail.io/api/v3/email/new').json()
+    return response['email']
 #──────────────{ EMAIL CODE }──────────────#
-def GetCode(proxy_list):
+def GetCode():
     try:
-        headers = {'Authorization': f'Bearer {token}'}
-        response = requests.get('https://api.mail.tm/messages', headers=headers, proxies=get_random_proxy(proxy_list)).json()
-        for msg in response['hydra:member']:
-            message = requests.get(f"https://api.mail.tm/messages/{msg['id']}", headers=headers, proxies=get_random_proxy(proxy_list)).json()
-            print(message)
-            code = re.search(r'FB-(\d+)', message.get('text', ''))
-            if code:
-                return code.group(1)
+        response = requests.get(f'https://api.internal.temp-mail.io/api/v3/email/{email}/messages').text
+        print(response.json())
+        code = re.search(r'FB-(\d+)', response).group(1)
+        return code
     except:
         return None
 #──────────────{ COLOR }──────────────#
@@ -984,13 +931,13 @@ def register_facebook_account(password, first_name, last_name, birthday):
     req['sig'] = ensig
     api_url = 'https://b-api.facebook.com/method/user.register'
     headers = {'User-Agent': ua6()}
-    try:
+        try:
         proxy = get_random_proxy(proxies)
-        print(f"[🌐] Using proxy: {proxy.get('http')}")
+        print(f"[🌐] Trying proxy: {proxy.get('http')}")
         response = requests.post(api_url, data=req, headers=headers, proxies=proxy, timeout=15)
-        print(f"[📡] FB Response: {response.text}")
+        reg = response.json()
     except Exception as e:
-        print(f"[❌] Proxy request failed: {e}")
+        print(f"[❌] Proxy or Request Error: {e}")
         return
     reg = response.json()
     id = reg.get('new_user_id')
@@ -1001,6 +948,7 @@ def register_facebook_account(password, first_name, last_name, birthday):
             cps.append(id)
         else:
             print(Panel(' [bold green]ACCOUNT ACCESSABLE', style="bold violet"))
+            print(f"[✅] Proxy Used: {proxy.get('http')}")
             time.sleep(30)
             try:
                 cod = Email(em["session"]).inbox()
