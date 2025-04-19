@@ -1175,7 +1175,7 @@ def Upload_Photo(p_pic_s):
         '__spin_t': re.search(r'"__spin_t":(\d+)',str(self.response)).group(1), 
         'fb_api_caller_class': 'RelayModern',
         'fb_api_req_friendly_name': 'ProfileCometProfilePictureSetMutation',
-        'variables': json.dumps(var)
+        'variables': json.dumps(var),
         'server_timestamps': 'true',
         'doc_id': '8707340955997640',
       }
