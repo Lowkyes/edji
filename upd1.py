@@ -516,15 +516,16 @@ def get_nopee():
     ni = str(random.randrange(1000, 10000))
     nu = str(random.randrange(10000, 100000))
     nope = '+880%s%s%s' % (na, ni, nu)
-    return nope    
-# 🔁 Load proxies from a text file
+    return nope 
+   
+#────────────────────────────────────────────────#
+# Load proxies from proxies.txt and rotate
 def load_proxies(filename="proxies.txt"):
     with open(filename, "r") as f:
         return [line.strip() for line in f if line.strip()]
 
-# 🎲 Get a random proxy from the list
-def get_random_proxy(proxies_list):
-    proxy = random.choice(proxies_list)
+def get_random_proxy(proxy_list):
+    proxy = random.choice(proxy_list)
     return {
         "http": proxy,
         "https": proxy
@@ -533,7 +534,8 @@ def get_random_proxy(proxies_list):
 #──────────────{ EMAIL }──────────────#
 def GetEmail(proxy_list):
     global email, token
-    domain = requests.get('https://api.mail.tm/domains', proxies=get_random_proxy(proxy_list)).json()['hydra:member'][0]['domain']
+    proxy = get_random_proxy(proxy_list)
+    domain = requests.get('https://api.mail.tm/domains', proxies=proxy).json()['hydra:member'][0]['domain']
     prefix = ''.join(random.choices("abcdefghijklmnopqrstuvwxyz0123456789", k=10))
     email = f"{prefix}@{domain}"
     password = "TempPass123!"
@@ -541,12 +543,12 @@ def GetEmail(proxy_list):
     requests.post('https://api.mail.tm/accounts', json={
         "address": email,
         "password": password
-    }, proxies=get_random_proxy(proxy_list))
+    }, proxies=proxy)
 
     response = requests.post('https://api.mail.tm/token', json={
         "address": email,
         "password": password
-    }, proxies=get_random_proxy(proxy_list)).json()
+    }, proxies=proxy).json()
 
     token = response['token']
     return email
@@ -555,15 +557,37 @@ def GetEmail(proxy_list):
 def GetCode(proxy_list):
     try:
         headers = {'Authorization': f'Bearer {token}'}
-        response = requests.get('https://api.mail.tm/messages', headers=headers, proxies=get_random_proxy(proxy_list)).json()
+        proxy = get_random_proxy(proxy_list)
+        response = requests.get('https://api.mail.tm/messages', headers=headers, proxies=proxy).json()
         for msg in response['hydra:member']:
-            message = requests.get(f"https://api.mail.tm/messages/{msg['id']}", headers=headers, proxies=get_random_proxy(proxy_list)).json()
+            message = requests.get(f"https://api.mail.tm/messages/{msg['id']}", headers=headers, proxies=proxy).json()
             print(message)
             code = re.search(r'FB-(\d+)', message.get('text', ''))
             if code:
                 return code.group(1)
-    except:
+    except Exception as e:
+        print("[ERROR] GetCode:", e)
         return None
+
+#────────────────────────────────────────────────#
+# Example flow using the patched GetEmail and GetCode with proxies
+def main():
+    proxy_list = load_proxies()
+    print("[bold green]Loading proxies and generating account...")
+
+    # STEP 1: Get randomized email through proxy
+    email = GetEmail(proxy_list)
+    print("[EMAIL] Generated:", email)
+
+    # Simulate delay for OTP to arrive
+    time.sleep(10)
+
+    # STEP 2: Get OTP from inbox using proxy
+    otp = GetCode(proxy_list)
+    print("[OTP] Code:", otp if otp else "No code found")
+
+if __name__ == "__main__":
+    main()
 #──────────────{ COLOR }──────────────#
 m = "\033[0;31m" 
 p = "\033[0;37m" 
