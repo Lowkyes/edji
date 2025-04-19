@@ -18,6 +18,16 @@ except:
 from rich import print 
 from rich.tree import Tree
 from rich.panel import Panel
+
+#──────────────{ PROXY INITIALIZATION }──────────────#
+proxies = []
+try:
+    with open("proxies.txt", "r") as f:
+        proxies = [line.strip() for line in f if line.strip()]
+except:
+    print("[⚠️] proxies.txt not found or empty. Continuing without proxy.")
+
+
 from rich.columns import Columns
 from rich.console import Console
 from rich.console import Group
@@ -915,8 +925,6 @@ def send_to_discord(webhook_url, uid, password, otp, account_counter):
 def register_facebook_account(password, first_name, last_name, birthday):
     global account_count
     session = requests.Session()
-    proxy = get_random_proxy(proxies)
-    session.proxies.update(proxy)
     api_key = '882a8490361da98702bf97a021ddc14d'
     secret = '62f8ce9f74b12f84c123cc23437a4a32'
     gender = random.choice(['M', 'F'])
@@ -948,8 +956,7 @@ def register_facebook_account(password, first_name, last_name, birthday):
     req['sig'] = ensig
     api_url = 'https://b-api.facebook.com/method/user.register'
     headers = {'User-Agent': ua6()}
-    proxy = get_random_proxy(proxies)
-    response = requests.post(api_url, data=req, headers=headers, proxies=proxy)
+    response = requests.post(api_url, data=req, headers=headers)
     reg = response.json()
     id = reg.get('new_user_id')
     token = reg.get('session_info', {}).get('access_token')
