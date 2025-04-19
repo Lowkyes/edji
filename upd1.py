@@ -971,7 +971,12 @@ def register_facebook_account(password, first_name, last_name, birthday):
         print(f'[❌] Proxy Error: {e}')
         return
     try:
+        try:
         reg = response.json()
+    except Exception as e:
+        print(f"[❌] JSON decode failed: {e}")
+        print(f"[📡] Raw response: {response.text}")
+        return
     except Exception as e:
         print(f'[❌] JSON Decode Error: {e}')
         print(f'[📡] Raw Response: {response.text}')
@@ -984,7 +989,6 @@ def register_facebook_account(password, first_name, last_name, birthday):
             cps.append(id)
         else:
             print(Panel(' [bold green]ACCOUNT ACCESSABLE', style="bold violet"))
-            print(f"[🌐] Proxy used: {proxy['http']}")
             time.sleep(30)
             try:
                 cod = Email(em["session"]).inbox()
@@ -1024,6 +1028,7 @@ def register_facebook_account(password, first_name, last_name, birthday):
                 print()
     else:
         print(f'[❌] Account creation failed. Response: {response.text}')
+        print(f"[❌] BAD result — account failed. Response: {response.text}")
         open("/sdcard/AUTO-CREATE-BRYX/create/auto-create-disabled-cp.txt", "a").write(f"{email}|{id}|BRYXPOGIJOKER123\n")
         cps.append(id)
 #──────────────{ AUTO PHOTO }──────────────#
