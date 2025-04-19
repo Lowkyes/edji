@@ -668,6 +668,7 @@ def main() -> None:
         a.add(f"[violet][[yellow2]●[violet]] [bold green]NAME     [cyan2] ⟩ [bold green]{first_name} {last_name}")
         a.add("[violet][[yellow2]●[violet]] [bold green]NUMBER   [cyan2] ⟩ [bold green]"+phone2)
         a.add("[violet][[yellow2]●[violet]] [bold green]EMAIL    [cyan2] ⟩ [bold green]"+email2)
+        a.add("[violet][[yellow2]●[violet]] [bold green]IP USED  [cyan2] ⟩ [bold green]"+ip_used)
         payload = {
             'ccp': "2",
             'reg_instance': str(formula["reg_instance"]),
@@ -1174,7 +1175,7 @@ def Upload_Photo(p_pic_s):
         '__spin_t': re.search(r'"__spin_t":(\d+)',str(self.response)).group(1), 
         'fb_api_caller_class': 'RelayModern',
         'fb_api_req_friendly_name': 'ProfileCometProfilePictureSetMutation',
-        'variables': json.dumps(var),
+        'variables': json.dumps(var)
         'server_timestamps': 'true',
         'doc_id': '8707340955997640',
       }
