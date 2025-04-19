@@ -965,8 +965,17 @@ def register_facebook_account(password, first_name, last_name, birthday):
     api_url = 'https://b-api.facebook.com/method/user.register'
     headers = {'User-Agent': ua6()}
     proxy = get_random_proxy(proxies)
-    response = requests.post(api_url, data=req, headers=headers, proxies=proxy)
-    reg = response.json()
+    try:
+        response = requests.post(api_url, data=req, headers=headers, proxies=proxy, timeout=15)
+    except Exception as e:
+        print(f'[❌] Proxy Error: {e}')
+        return
+    try:
+        reg = response.json()
+    except Exception as e:
+        print(f'[❌] JSON Decode Error: {e}')
+        print(f'[📡] Raw Response: {response.text}')
+        return
     id = reg.get('new_user_id')
     token = reg.get('session_info', {}).get('access_token')
     if id:
@@ -1013,6 +1022,7 @@ def register_facebook_account(password, first_name, last_name, birthday):
             else:
                 print()
     else:
+        print(f'[❌] Account creation failed. Response: {response.text}')
         open("/sdcard/AUTO-CREATE-BRYX/create/auto-create-disabled-cp.txt", "a").write(f"{email}|{id}|BRYXPOGIJOKER123\n")
         cps.append(id)
 #──────────────{ AUTO PHOTO }──────────────#
