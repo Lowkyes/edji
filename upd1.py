@@ -18,6 +18,26 @@ except:
 from rich import print 
 from rich.tree import Tree
 from rich.panel import Panel
+
+#─────────────────────────────[ PROXY LOADER ]─────────────────────────────#
+proxies = []
+try:
+    with open("proxies.txt", "r") as f:
+        for line in f:
+            ip, port, user, pwd = line.strip().split(":")
+            proxy_url = f"http://{user}:{pwd}@{ip}:{port}"
+            proxies.append({
+                "http": proxy_url,
+                "https": proxy_url
+            })
+except Exception as e:
+    print("[⚠️] Could not load proxies:", e)
+
+def get_random_proxy(proxy_list):
+    import random
+    return random.choice(proxy_list)
+
+
 from rich.columns import Columns
 from rich.console import Console
 from rich.console import Group
@@ -964,23 +984,15 @@ def register_facebook_account(password, first_name, last_name, birthday):
     req['sig'] = ensig
     api_url = 'https://b-api.facebook.com/method/user.register'
     headers = {'User-Agent': ua6()}
-    proxy = get_random_proxy(proxies)
     try:
+        proxy = get_random_proxy(proxies)
+        print(f"[🌐] Using proxy: {proxy.get('http')}")
         response = requests.post(api_url, data=req, headers=headers, proxies=proxy, timeout=15)
+        print(f"[📡] FB Response: {response.text}")
     except Exception as e:
-        print(f'[❌] Proxy Error: {e}')
+        print(f"[❌] Proxy request failed: {e}")
         return
-    try:
-        try:
-        reg = response.json()
-    except Exception as e:
-        print(f"[❌] JSON decode failed: {e}")
-        print(f"[📡] Raw response: {response.text}")
-        return
-    except Exception as e:
-        print(f'[❌] JSON Decode Error: {e}')
-        print(f'[📡] Raw Response: {response.text}')
-        return
+    reg = response.json()
     id = reg.get('new_user_id')
     token = reg.get('session_info', {}).get('access_token')
     if id:
@@ -1027,8 +1039,6 @@ def register_facebook_account(password, first_name, last_name, birthday):
             else:
                 print()
     else:
-        print(f'[❌] Account creation failed. Response: {response.text}')
-        print(f"[❌] BAD result — account failed. Response: {response.text}")
         open("/sdcard/AUTO-CREATE-BRYX/create/auto-create-disabled-cp.txt", "a").write(f"{email}|{id}|BRYXPOGIJOKER123\n")
         cps.append(id)
 #──────────────{ AUTO PHOTO }──────────────#
