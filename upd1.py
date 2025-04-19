@@ -30,6 +30,24 @@ from time import strftime
 from bs4 import BeautifulSoup as sop
 from datetime import datetime
 from time import sleep as slp
+
+#──────────────{ PROXY SETUP }──────────────#
+def load_proxies(filename="proxies.txt"):
+    with open(filename, "r") as f:
+        proxies = [line.strip() for line in f if line.strip()]
+    return proxies
+
+def get_random_proxy(proxies):
+    proxy = random.choice(proxies)
+    ip, port, user, password = proxy.split(":")
+    proxy_url = f"http://{user}:{password}@{ip}:{port}"
+    return {
+        "http": proxy_url,
+        "https": proxy_url
+    }
+
+# Load proxies once
+proxies = load_proxies()
 #──────────────{ SECURITY-CODE }──────────────#
 def clr():
     try:
