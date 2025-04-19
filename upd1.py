@@ -646,13 +646,13 @@ def main() -> None:
     print(Panel(f" [bold green]IF NO RESULT ON/OFF AIRPLANE MODE OR VPN 1.1.1.1",style="bold violet"))
     for _ in range(int(num_accounts)):
         proxy_list = load_proxies()
-    proxy = get_random_proxy(proxy_list)
-    ses = requests.Session()
-    ses.proxies = {
-        "http": f"http://{proxy}",
-        "https": f"http://{proxy}"
-    }
-    ip_used = get_ip(ses)
+        proxy = get_random_proxy(proxy_list)
+        ses = requests.Session()
+        ses.proxies = {
+            "http": f"http://{proxy}",
+            "https": f"http://{proxy}"
+        }
+        ip_used = get_ip(ses)
         #sys.stdout.write(f'\033[1;37m[\033[1;35mBRYXPOGI\033[1;37m]-[\033[1;31m{num_accounts}\033[1;37m]-[\033[1;32mSUCCESS:-{len(oks)}\033[1;37m]');sys.stdout.flush()
         response = ses.get(
             url='https://x.facebook.com/reg',
