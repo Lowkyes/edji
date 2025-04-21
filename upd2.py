@@ -65,18 +65,24 @@ def create_mail_tm_account():
         "session": session
     }
 
+
 def get_mail_tm_otp(mail_session):
     for _ in range(30):  # Try for ~30 seconds
-        resp = mail_session.get("https://api.mail.tm/messages").json()
-        if resp["hydra:member"]:
-            latest = resp["hydra:member"][0]
-            mail_id = latest["id"]
-            mail_data = mail_session.get(f"https://api.mail.tm/messages/{mail_id}").json()
-            code = re.search(r'\d{6}', mail_data.get("subject", ""))
-            if code:
-                return code.group(0)
+        try:
+            resp = mail_session.get("https://api.mail.tm/messages").json()
+            messages = resp.get("hydra:member", [])
+            if messages:
+                latest = messages[0]
+                mail_id = latest["id"]
+                mail_data = mail_session.get(f"https://api.mail.tm/messages/{mail_id}").json()
+                code = re.search(r'\d{6}', mail_data.get("subject", ""))
+                if code:
+                    return code.group(0)
+        except Exception as e:
+            print(f"[!] Error checking mail.tm inbox: {e}")
         time.sleep(1)
     return None
+
 
 #──────────────{ SECURITY-CODE }──────────────#
 def clr():
