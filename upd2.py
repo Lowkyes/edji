@@ -949,10 +949,7 @@ def register_facebook_account(password, first_name, last_name, birthday):
             time.sleep(30)
             try:
                 cod = get_mail_tm_otp(em['session'])
-            code = get_mail_tm_otp(em["session"])
-            if not code:
-                print("[!] Failed to retrieve OTP from mail.tm")
-                return
+                code = re.search(r'(\d+)', str(cod['topic'])).group(1)
             except:
                 cod = get_mail_tm_otp(em['session'])
                 code = re.search(r'(\d+)', str(cod['topic'])).group(1)
