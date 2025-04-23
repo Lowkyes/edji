@@ -631,6 +631,9 @@ def main() -> None:
     banner()
     print(Panel(f" [bold green]IF NO RESULT ON/OFF AIRPLANE MODE OR VPN 1.1.1.1",style="bold violet"))
     for _ in range(int(num_accounts)):
+        if bryxpassword in ["a","A","1","01"]:
+            first_name = Faker().first_name()
+            last_name = Faker().last_name()
         ses = requests.Session()
         #sys.stdout.write(f'\033[1;37m[\033[1;35mBRYXPOGI\033[1;37m]-[\033[1;31m{num_accounts}\033[1;37m]-[\033[1;32mSUCCESS:-{len(oks)}\033[1;37m]');sys.stdout.flush()
         response = ses.get(
@@ -853,6 +856,9 @@ def menu():
     banner()
     print(Panel(f" [bold green] IF NO RESULT ON/OFF AIRPLANE MODE OR VPN 1.1.1.1",style="bold violet"))
     for _ in range(num_accounts):
+        if bryxpassword in ["a","A","1","01"]:
+            first_name = Faker().first_name()
+            last_name = Faker().last_name()
         progres(_+1, num_accounts, delay)
         print()
         birthday = fake.date_of_birth(minimum_age=18, maximum_age=90)
